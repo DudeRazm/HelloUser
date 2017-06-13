@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">HelloUser</string>
+    <string name="app_name">Hello World!</string>
     <string name="intro">Интро</string>
     <string name="main_activity">Главная активити</string>
+    <string name="phone_number">Ваш номер телефона</string>
+    <string name="login">логин</string>
+    <string name="hint">введите номер полностью</string>
 </resources>
