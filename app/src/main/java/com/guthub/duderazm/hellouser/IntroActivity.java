@@ -1,5 +1,6 @@
 package com.guthub.duderazm.hellouser;
 
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -100,6 +101,7 @@ public class IntroActivity extends AppCompatActivity {
         return isLoginFieldCorrect && isPhoneFieldCorrect;
     }
 
+
     // <<< private methods
 
     private class ValueListener implements MaskedTextChangedListener.ValueListener {
@@ -110,10 +112,13 @@ public class IntroActivity extends AppCompatActivity {
             if (maskFilled) {
                 mLoginButton.setEnabled(true);
                 mHintTextView.setVisibility(View.INVISIBLE);
+                Utils.hideKeyBoard(mPhoneEditText, getApplicationContext());
             } else {
                 mLoginButton.setEnabled(false);
                 mHintTextView.setVisibility(View.VISIBLE);
             }
         }
     }
+
+
 }
