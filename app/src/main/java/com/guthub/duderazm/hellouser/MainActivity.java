@@ -11,9 +11,8 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends Activity {
 
         private static final String IMAGE_URL = "http://i.imgur.com/DvpvklR.png";
-        private ImageView mImageView;
 
-        public static Intent createExplicitIntent(Context context){
+    public static Intent createExplicitIntent(Context context){
             return new Intent(context, MainActivity.class);
         }
 
@@ -22,14 +21,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mImageView = (ImageView) findViewById(R.id.android_image_view);
+        ImageView imageView = (ImageView) findViewById(R.id.android_image_view);
         Picasso.with(this)
                 .load(IMAGE_URL)
                 .resize(500, 500)
                 .centerCrop()
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.error)
-                .into(mImageView);
+                .into(imageView);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // No need to do anything here
+        if (!Utils.readIsAlreadyLoggedIn(this))
+            super.onBackPressed();
     }
 }
