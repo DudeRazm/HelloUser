@@ -22,7 +22,7 @@
 
         <EditText
             android:digits="+ ()0123456789"
-            android:id="@+id/edit_text"
+            android:id="@+id/phone_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"/>
@@ -46,6 +46,8 @@
 
     <TextView
         android:id="@+id/hint_text_view"
+        android:text="@string/hint"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
