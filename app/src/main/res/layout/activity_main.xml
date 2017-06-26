@@ -37,6 +37,13 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+
+            android:src="@drawable/lock_vector"
+            android:padding="@dimen/margin_small"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
         <android.support.design.widget.TextInputLayout
             android:layout_gravity="center"
             android:layout_width="@dimen/width_intro"
