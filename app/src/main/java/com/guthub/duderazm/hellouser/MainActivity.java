@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 public class MainActivity extends Activity {
     private static final String IMAGE_URL = "http://i.imgur.com/DvpvklR.png";
@@ -20,11 +25,22 @@ public class MainActivity extends Activity {
     @BindView(R.id.hello_text_view)
     TextView mUserLoginTextView;
 
-    public static Intent createExplicitIntent(Context context, String userLogin){
+    @BindView(R.id.basic_lauout)
+    LinearLayout mBasicLayout;
+
+    @BindView(R.id.password_layout)
+    LinearLayout mPasswordLayot;
+
+    @BindView(R.id.password_edit_text)
+    EditText mPasswordEditText;
+
+    private boolean isPasswordCorrect;
+
+    public static Intent createExplicitIntent(Context context, String userLogin) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(EXTRA_USER_LOGIN, userLogin);
         return intent;
-        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +48,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+
         String userLogin = "Hello,";
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             userLogin = getIntent().getExtras().getString(EXTRA_USER_LOGIN, "world");
         } else {
             userLogin += Utils.readUserLogin(this);
@@ -54,8 +72,24 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        // No need to do anything here
-        if (!Utils.readIsAlreadyLoggedIn(this))
+        if (Utils.readIsAlreadyLoggedIn(this))
             super.onBackPressed();
+    }
+
+    @OnTextChanged(value = R.id.password_edit_text,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterPasswordInput(Editable editable) {
+        isPasswordCorrect = Utils.isPasswordMatching(MainActivity.this, editable.toString());
+        if (isPasswordCorrect) {
+            showMainlayout();
+        }
+    }
+
+    // >>> private methods
+    private void showMainlayout() {
+        Utils.hideKeyBoard(mPasswordEditText, getApplicationContext());
+        mBasicLayout.setVisibility(View.VISIBLE);
+        mPasswordLayot.setVisibility(View.GONE);
+
     }
 }

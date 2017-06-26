@@ -6,20 +6,51 @@
     android:layout_height="match_parent"
     tools:context="com.guthub.duderazm.hellouser.MainActivity">
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/basic_lauout"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/hello_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/android_image_view"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
     <ImageView
         android:src="@mipmap/ic_launcher"
         android:id="@+id/android_image_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/basic_lauout"
+        android:gravity="center"
+        android:id="@+id/password_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="@dimen/width_intro"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="@dimen/width_intro"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="12"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
 </RelativeLayout>

@@ -20,6 +20,7 @@ import butterknife.OnTextChanged;
 public class IntroActivity extends AppCompatActivity {
 
     private static final int MIN_LOGIN_LENGTH = 5;
+    private static final int PASSWORD_MIN_LENGTH = 8;
 
     @BindView(R.id.hint_text_view)
     TextView mHintTextView;
@@ -30,18 +31,22 @@ public class IntroActivity extends AppCompatActivity {
     @BindView(R.id.login_edit_text)
     EditText mLoginEditText;
 
+    @BindView(R.id.password_edit_text)
+    EditText mPasswordEditText;
+
     @BindView(R.id.phone_edit_text)
     EditText mPhoneEditText;
 
     boolean isLoginFieldCorrect = false;
     boolean isPhoneFieldCorrect = false;
+    boolean isPasswordCorrect = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        if(Utils.readIsAlreadyLoggedIn(this)){
+        if (Utils.readIsAlreadyLoggedIn(this)) {
             goToMainActivity();
         }
 
@@ -55,7 +60,7 @@ public class IntroActivity extends AppCompatActivity {
     void login() {
         if (isInputDataCorrect()) {
             Utils.writeUserLogin(this, mLoginEditText.getText().toString());
-            Utils.writeIsAlreadyLoggedIn(this,true);
+            Utils.writeIsAlreadyLoggedIn(this, true);
             goToMainActivity();
 
         } else {
@@ -69,10 +74,18 @@ public class IntroActivity extends AppCompatActivity {
         isLoginFieldCorrect = editable.length() > MIN_LOGIN_LENGTH;
     }
 
-    /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
+    @OnTextChanged(value = R.id.password_edit_text,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterPasswordInput(Editable editable) {
+        isPasswordCorrect = editable.length() >= PASSWORD_MIN_LENGTH;
+        if (!isPasswordCorrect) {
+            mPasswordEditText.setError("password it easy! minimum " + PASSWORD_MIN_LENGTH + " digits");
+        } else {
+            mPasswordEditText.setError(null);
+            Utils.writePassword(this, editable.toString());
+        }
+    }
+
 
     // >>> private methods
 
@@ -89,9 +102,11 @@ public class IntroActivity extends AppCompatActivity {
         mPhoneEditText.setOnFocusChangeListener(listener);
         mPhoneEditText.setHint(listener.placeholder());
     }
+
     private boolean isInputDataCorrect() {
-        return isLoginFieldCorrect && isPhoneFieldCorrect;
+        return isLoginFieldCorrect && isPhoneFieldCorrect && isPasswordCorrect;
     }
+
     private void enableLoginButton(boolean enabled) {
         mLoginButton.setEnabled(enabled);
     }
